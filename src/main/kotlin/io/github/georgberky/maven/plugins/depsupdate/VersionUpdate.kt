@@ -10,10 +10,10 @@ abstract class VersionUpdate(
 ) {
     abstract fun updatedPom() : Document
 
-    fun canSkip() : Boolean {
+    fun isAlreadyLatestVersion() : Boolean {
         println("canSkip: ${latestVersion} compare to ${version}")
         println("latestVersion.equals(version) = ${latestVersion.equals(version)}")
-        return !latestVersion.equals(version)
+        return latestVersion.equals(version)
     }
 
 }
