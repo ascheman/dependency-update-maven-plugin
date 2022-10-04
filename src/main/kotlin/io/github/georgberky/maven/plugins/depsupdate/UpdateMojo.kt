@@ -26,6 +26,8 @@ class UpdateMojo : AbstractMojo() {
     lateinit var connectionType: String
     @Parameter(property = "dependencyUpdate.git.provider", defaultValue="NATIVE", required = false)
     lateinit var gitProvider : GitProviderChoice
+    @Parameter(property = "dependencyUpdate.dryrun", required = false, defaultValue = "true")
+    var dryrun : Boolean = false
 
     @Component
     lateinit var artifactFactory: ArtifactFactory
@@ -60,7 +62,9 @@ class UpdateMojo : AbstractMojo() {
                     "dependency-update-bot","",
                     "Bump ${update.artifactId} from ${update.version} to ${update.latestVersion}"
                 )
-                git.push(branchName)
+                if (!dryrun) {
+                    git.push(branchName)
+                }
                 git.checkoutInitialBranch()
             }
         }
